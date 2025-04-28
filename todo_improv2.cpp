@@ -5,19 +5,11 @@
 #include<time.h>
 
 using namespace std;
-// this function deterime which part is going to be where
-// it helps to use cls more clearly 
-// it helps to identify whih part should erase and which no
-void gotoxy(int x, int y){
-  COORD coord; // defines a coordinate structure (x,y)
-  // for the console
-  // set desire s and y positions 
 
+void gotoxy(int x, int y){
+  COORD coord; 
   coord.X = x;
   coord.Y = y;
-  // windows api function that 
-  // moves the console cursor to specifi cordiantes
-  // gets the output handle
   SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
 }
 
@@ -27,25 +19,15 @@ int seccond  = 0;
 
 void Real_time(){
   time_t now = time(0);
-  // get the function time 
-
   char* dt = ctime(&now);
-  // convert the time to the string
-
   tm *lotm = localtime(&now);
-  //convert the time to a tm structure containing local time componets (ours ,minute , seconds etc)
   dt = asctime(lotm);
-   //convert tm structure to a string
   int hour = lotm->tm_hour;
-  // extract the corrent timme like hours minutes and secconds
   int min = lotm->tm_min;
   int sec = lotm->tm_sec;
 
   while (hour>0|| min >0||sec >0)
   {
-    // system("cls");
-    // cout<<h<<":"<<m<<":"<<s<<endl;
-    // gotoxy(1,1);
     gotoxy(50,2);
     cout<<hour<<":"<<min<<":"<<sec<<"\n";
 
@@ -84,8 +66,6 @@ void show_time_left(){
       void set_timmer(int hour_in,int  min_in, int sec){
           while (hour>0 || minute >0 || seccond > 0)
           { 
-        // system("cls");
-        // cout<<hour_in<<":"<<min_in<<":"<<sec<<endl;
           show_time_left();
           Sleep(1000);
           sec--;
@@ -113,9 +93,6 @@ void show_time_left(){
           seccond = sec;
         }
            gotoxy(2,4);
-          // show_time_left();
-         
-    
 }
 
 
@@ -124,7 +101,6 @@ void input_data(){
         ofstream out("sample121.txt",ios::app);
         if (!out)
         {
-          // gotoxy(2,2);
           cout<<"Invalid opening the file ";
         }
         int v;
@@ -134,7 +110,7 @@ void input_data(){
 
         cout<<"Enter the choice ";
         cin>>v;
-        cin.ignore();// for new line in file
+        cin.ignore();
     if (v==1)
     {  
       bool exitt = false;
@@ -153,7 +129,6 @@ void input_data(){
               system("cls");
               exitt = true;
      }
-     // just simple animation-- 
         cout<<"Storing Tasks"<<endl;
         for (int i = 0; i < 3; i++)
         {       
@@ -161,7 +136,6 @@ void input_data(){
           Sleep(400);
         }
         system("cls");
-        //  exit = true;
         cout<<"your tasks are stored";  
     }
     else if (v==2)
@@ -169,7 +143,6 @@ void input_data(){
             string min_M;
             string sec_S;
             int H,M,S;
-            // set time limit for yours tasks 
             ofstream Time("Time121.txt",ios::app);
             if (!Time)
             {
@@ -193,7 +166,6 @@ void input_data(){
             seccond = S;
             Time.close();
             cout<<"Timer set!"<<"\n";
-            // system("cls");
     }else{
       cout<<"invalid choice";
     } 
@@ -202,52 +174,28 @@ void Display(){
          system("cls");
          gotoxy(2,1);
          cout<<"========Todays Tasks======="<<"\n";
-         // display tasks
-        ifstream file("sample121.txt"); // open file to read 
+        ifstream file("sample121.txt"); 
         string line;
-        int y = 6;// staring y position 
+        int y = 6;
         if (file.is_open())
           { 
             gotoxy(2,3);
             cout<<"Todays Tasks"<<"\n";
             while (getline(file,line))
           {   
-            gotoxy(4,y);//set place in console 
+            gotoxy(4,y);
             cout<<"-"<<line<<endl; 
             y += 2;
        
             } 
-             file.close(); 
-            //  Sleep(5000);
-            }   
+             file.close();             }   
          else {
             gotoxy(2,3);
             cout<<"Unable to open file \n";
               }  
-            // gotoxy(2,2);// set place in console 
-            // ifstream time("Time.txt");
-            // if (time.is_open())
-            // {  
-            //   gotoxy(1,y+2);
-            //    cout<<"REMAINING TIME "<<"\n";
-
-            // }
-            // else{
-            //   cout<<"Unable to open"<<"\n";
-            // }
-            // // timer
              gotoxy(50,4);
             set_timmer(hour,minute,seccond);
-
-            // gotoxy(3,3);
-            Real_time(); // do you the problem if you use one of the time 
-            // the other one will not work bcz
-            // when you use remaing time the loop will ocntinue 
-            // until it got its time and when you use real time 
-            // the real time loop contiue 
-            // thats why you can only use one loop at a time 
-            // this implies you can use only real time of eather remianing time
-
+            Real_time(); 
 }
 
 int main(){
@@ -264,7 +212,6 @@ int main(){
           cout<<"\tEnter your choice ";
           cin>>val;
           cin.ignore();
-    //it take value for functioning 
          if (val == 1)
          {
             input_data();
